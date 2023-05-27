@@ -1,0 +1,11 @@
+{
+  "id": "obsidian-copy-external",
+  "name": "Copy to External Directory",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Obsidian plugin to copy vault changes to an external directory",
+  "author": "Blake Rain",
+  "authorUrl": "https://blakerain.com/projects/obsidian-copy-external",
+  "fundingUrl": "https://obsidian.md/pricing",
+  "isDesktopOnly": true
+}
