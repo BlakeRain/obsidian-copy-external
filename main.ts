@@ -315,7 +315,6 @@ class CopyExternalSettingTab extends PluginSettingTab {
           .setPlaceholder("Enter target directory")
           .setValue(this.plugin.settings.targetDirectory)
           .onChange(async (value) => {
-            console.log("Target Directory: " + value);
             this.plugin.settings.targetDirectory = value;
             await this.plugin.saveSettings();
           })
