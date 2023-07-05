@@ -20,7 +20,7 @@ interface CopyExternalPluginSettings {
 }
 
 const DEFAULT_SETTINGS: CopyExternalPluginSettings = {
-  targetDirectory: "$HOME/cs/test-notes",
+  targetDirectory: "",
   notifyCreate: true,
   notifyModify: false,
   notifyDelete: true,
@@ -94,8 +94,13 @@ export default class CopyExternalPlugin extends Plugin {
 
   // Check to name sure that the target path (from the settings) exists.
   async targetPathExists(): Promise<boolean> {
+    const targetPath = this.expandTargetPath();
+    if (targetPath.length === 0) {
+      return false;
+    }
+
     try {
-      const targetStat = await fs.stat(this.expandTargetPath());
+      const targetStat = await fs.stat(targetPath);
       return targetStat.isDirectory();
     } catch {
       return false;
