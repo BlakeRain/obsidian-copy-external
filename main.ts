@@ -37,6 +37,7 @@ export default class CopyExternalPlugin extends Plugin {
 
     if (Platform.isMobile) {
       console.log("Ignoring on mobile platform");
+      new Notice("Copy External plugin is not supported on mobile platforms");
       return;
     }
 
