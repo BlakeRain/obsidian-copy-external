@@ -1,6 +1,7 @@
 import {
   App,
   Notice,
+  Platform,
   Plugin,
   PluginSettingTab,
   Setting,
@@ -33,6 +34,11 @@ export default class CopyExternalPlugin extends Plugin {
 
   async onload() {
     await this.loadSettings();
+
+    if (Platform.isMobile) {
+      console.log("Ignoring on mobile platform");
+      return;
+    }
 
     // This adds a settings tab so the user can configure various aspects of the plugin
     this.addSettingTab(new CopyExternalSettingTab(this.app, this));
