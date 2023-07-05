@@ -66,6 +66,14 @@ export default class CopyExternalPlugin extends Plugin {
       )
     );
 
+    this.addCommand({
+      id: "copy-external-sync",
+      name: "Sync All Files to External Directory",
+      callback: async () => {
+        await this.syncExistingFiles();
+      },
+    });
+
     await this.syncExistingFiles();
   }
 
