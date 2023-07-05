@@ -216,8 +216,30 @@ export default class CopyExternalPlugin extends Plugin {
 
     // If we're creating a folder, then we want to create the corresponding folder in the target directory.
     if (fileStat?.type === "folder") {
-      await fs.mkdir(targetPath);
+      const existing = await this.safeStat(targetPath);
+      if (existing === null) {
+        await fs.mkdir(targetPath);
+
+        if (this.settings.notifyCreate) {
+          new Notice(`Synced new directory '${file.name}'`);
+        }
+      } else if (!existing.isDirectory()) {
+        console.error(
+          `Target path '${targetPath}' already exists and is not a directory`
+        );
+        new Notice(
+          `Target path '${targetPath}' already exists and is not a directory`
+        );
+      }
     } else if (fileStat?.type === "file") {
+      const existing = await this.safeStat(targetPath);
+      if (existing !== null) {
+        if (fileStat.mtime <= existing.mtime.getTime()) {
+          // File already exists and is up-to-date
+          return;
+        }
+      }
+
       // Read the contents of the file. We do this as binary so we can read anything.
       const content = await file.vault.adapter.readBinary(file.path);
       // Write the new contents of the file to the target directory.
